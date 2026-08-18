@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --bg: #0a0a0a;
+  --line: #2a2a2a;
+  --line-light: #1a1a1a;
+  --text: #f5f5f0;
+  --text-dim: #8a8a85;
+  --red: #c1272d;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'IBM Plex Mono', monospace; }
+
+.page { max-width: 780px; margin: 0 auto; padding: 60px 32px 100px; }
+
+.masthead { border-bottom: 3px solid var(--text); padding-bottom: 20px; margin-bottom: 6px; }
+.masthead-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+.brand { font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.02em; }
+.brand .dot { color: var(--red); }
+.masthead-meta { font-size: 10.5px; color: var(--text-dim); text-align: right; letter-spacing: 0.5px; }
+.title { font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.3px; }
+.subtitle { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+
+.section { border-bottom: 1px solid var(--line); padding: 28px 0; }
+.section:last-child { border-bottom: none; }
+.section-label {
+  font-family: 'Archivo', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--text-dim); margin-bottom: 18px;
+}
+.section-label .red { color: var(--red); }
+
+.upload-row {
+  border: 1px solid var(--line); padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;
+}
+.upload-row:hover { border-color: var(--text-dim); }
+.upload-row span { font-size: 12.5px; color: var(--text-dim); }
+.upload-status { font-size: 11px; letter-spacing: 1px; }
+.upload-status.ok { color: var(--red); }
+
+.ledger-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
+.ledger-cell { border-top: 1px solid var(--line); border-right: 1px solid var(--line); padding: 20px 22px; }
+.ledger-cell:nth-child(2n) { border-right: none; }
+.ledger-cell:nth-child(-n+2) { border-top: none; }
+.ledger-num { font-family: 'Archivo', sans-serif; font-size: 32px; font-weight: 800; line-height: 1; }
+.ledger-lab { font-size: 10.5px; color: var(--text-dim); letter-spacing: 0.5px; margin-top: 8px; text-transform: uppercase; }
+
+.filter-row { display: flex; gap: 0; margin-bottom: 16px; border: 1px solid var(--line); width: fit-content; }
+.filter-btn {
+  background: none; border: none; color: var(--text-dim); font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; letter-spacing: 1px; padding: 8px 16px; cursor: pointer; text-transform: uppercase;
+  border-right: 1px solid var(--line);
+}
+.filter-btn:last-child { border-right: none; }
+.filter-btn.active { background: var(--text); color: var(--bg); }
+
+.record { border-top: 1px solid var(--line-light); padding: 14px 0; }
+.record:first-child { border-top: none; }
+.record-top { display: flex; justify-content: space-between; gap: 12px; }
+.record-what { font-size: 13px; font-weight: 500; }
+.record-status { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; flex-shrink: 0; padding-top: 1px; }
+.record-status.verified { color: var(--text); }
+.record-status.verified::before { content: '— '; color: var(--red); }
+.record-status.rejected { color: var(--text-dim); }
+.record-status.rejected::before { content: '× '; color: var(--red); }
+.record-meta { font-size: 11px; color: var(--text-dim); margin-top: 5px; }
+.record-reason { font-size: 11px; color: var(--text-dim); margin-top: 3px; font-style: italic; }
+
+.empty { color: var(--text-dim); font-size: 12px; padding: 30px 0; text-align: center; border: 1px dashed var(--line); }
+
+.chat-messages { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; max-height: 260px; overflow-y: auto; }
+.msg { font-size: 12.5px; padding: 10px 12px; border: 1px solid var(--line); max-width: 85%; }
+.msg.user { align-self: flex-end; border-color: var(--text); }
+.msg.assistant { align-self: flex-start; color: var(--text-dim); }
+.chat-row { display: flex; gap: 8px; }
+.ledger-input {
+  background: none; border: 1px solid var(--line); color: var(--text); font-family: 'IBM Plex Mono', monospace;
+  font-size: 12.5px; padding: 9px 12px; flex: 1;
+}
+.ledger-input:focus { outline: none; border-color: var(--text); }
+.ledger-btn {
+  background: var(--text); color: var(--bg); border: none; font-family: 'Archivo', sans-serif; font-weight: 700;
+  font-size: 11px; letter-spacing: 1px; padding: 0 20px; cursor: pointer; text-transform: uppercase;
+}
+.key-input { width: 100%; margin-bottom: 12px; }
+
+.footer-note { font-size: 10.5px; color: var(--text-dim); margin-top: 40px; text-align: center; letter-spacing: 0.5px; }
