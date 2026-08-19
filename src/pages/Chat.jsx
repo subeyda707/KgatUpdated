@@ -33,12 +33,26 @@ export default function Chat() {
       <div className="page-title">Ask KGAT</div>
       <p className="page-sub">Grounded only in the live audit trail. Answers come from the backend, never the browser directly.</p>
 
-      <div className="section">
-        <div className="chat-messages">
-          {messages.map((m, i) => <div key={i} className={`msg ${m.role}`}>{m.text}</div>)}
-          {loading && <div className="msg assistant">Thinking…</div>}
+      <div className="chat-shell">
+        <div className="chat-header">
+          <div className="chat-header-dot"></div>
+          <div className="chat-header-label">KGAT — Grounded Chat</div>
         </div>
-        <div className="chat-row">
+        <div className="chat-messages2">
+          {messages.map((m, i) => (
+            <div key={i} className={`msg2 ${m.role}`}>
+              <div className="msg2-avatar">{m.role === 'assistant' ? 'K' : 'Y'}</div>
+              <div className="msg2-bubble">{m.text}</div>
+            </div>
+          ))}
+          {loading && (
+            <div className="msg2 assistant">
+              <div className="msg2-avatar">K</div>
+              <div className="msg2-bubble">Thinking…</div>
+            </div>
+          )}
+        </div>
+        <div className="chat-input-shell">
           <input className="ledger-input" placeholder="Ask a question…" value={question}
                  onChange={e => setQuestion(e.target.value)} onKeyDown={e => e.key==='Enter' && send()} />
           <button className="ledger-btn" onClick={send} disabled={status !== 'ready'}>Send</button>
