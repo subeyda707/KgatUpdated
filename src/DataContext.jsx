@@ -1,20 +1,34 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { API_BASE_URL } from './config.js';
 
 const DataContext = createContext(null);
 
 export function DataProvider({ children }) {
   const [data, setData] = useState(null);
+  const [status, setStatus] = useState('loading'); // loading | ready | error
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const loadFile = (file) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try { setData(JSON.parse(e.target.result)); }
-      catch (err) { alert('Could not parse this file as JSON.'); }
-    };
-    reader.readAsText(file);
+  const fetchResults = async () => {
+    setStatus('loading');
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/results`);
+      if (!res.ok) throw new Error(`Server responded ${res.status}`);
+      const json = await res.json();
+      setData(json);
+      setStatus('ready');
+    } catch (err) {
+      setErrorMsg(err.message);
+      setStatus('error');
+    }
   };
 
-  return <DataContext.Provider value={{ data, loadFile }}>{children}</DataContext.Provider>;
+  useEffect(() => { fetchResults(); }, []);
+
+  return (
+    <DataContext.Provider value={{ data, status, errorMsg, refetch: fetchResults }}>
+      {children}
+    </DataContext.Provider>
+  );
 }
 
 export function useKgatData() {
