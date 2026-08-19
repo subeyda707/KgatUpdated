@@ -7,6 +7,7 @@ import Verification from './pages/Verification.jsx';
 import Documentation from './pages/Documentation.jsx';
 import Results from './pages/Results.jsx';
 import Methodology from './pages/Methodology.jsx';
+import Chat from './pages/Chat.jsx';
 
 const links = [
   ['/', 'Overview'],
@@ -15,6 +16,7 @@ const links = [
   ['/verification', 'Verification'],
   ['/documentation', 'LLM Documentation'],
   ['/results', 'Evaluation'],
+  ['/chat', 'Ask KGAT'],
   ['/methodology', 'Methodology'],
 ];
 
@@ -38,6 +40,7 @@ export default function App() {
         <Route path="/verification" element={<Verification />} />
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/results" element={<Results />} />
+        <Route path="/chat" element={<Chat />} />
         <Route path="/methodology" element={<Methodology />} />
       </Routes>
     </>
