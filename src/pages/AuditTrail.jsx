@@ -1,11 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useKgatData } from '../DataContext.jsx';
 
 export default function AuditTrail() {
-  const { data, loadFile } = useKgatData();
+  const { data, status, errorMsg, refetch } = useKgatData();
   const [filter, setFilter] = useState('all');
   const [selected, setSelected] = useState(null);
-  const fileInput = useRef(null);
 
   const trail = data?.audit_trail || [];
   const filtered = filter === 'all' ? trail : trail.filter(r => r.status.toLowerCase() === filter);
@@ -13,19 +12,31 @@ export default function AuditTrail() {
   return (
     <div className="page">
       <div className="page-title">Live Audit Trail</div>
-      <p className="page-sub">Every event KGAT has processed, with its real verification outcome. Click a row for the full record.</p>
+      <p className="page-sub">Every event KGAT has processed, fetched live from the backend. Click a row for the full record.</p>
 
       <div className="section">
-        <div className="section-label"><span className="red">—</span> Load Export</div>
-        <div className="upload-row" onClick={() => fileInput.current.click()}>
-          <span>{data ? 'kgat_export.json loaded' : 'Click to load kgat_export.json'}</span>
-          <span className={`upload-status ${data ? 'ok' : ''}`}>{data ? 'LOADED' : 'AWAITING FILE'}</span>
-        </div>
-        <input ref={fileInput} type="file" accept=".json" style={{display:'none'}}
-               onChange={e => e.target.files[0] && loadFile(e.target.files[0])} />
+        <div className="section-label"><span className="red">—</span> Connection</div>
+        {status === 'loading' && (
+          <div className="upload-row">
+            <span>Connecting to KGAT backend… (a cold start can take up to a minute)</span>
+            <span className="upload-status">CONNECTING</span>
+          </div>
+        )}
+        {status === 'error' && (
+          <div className="upload-row" onClick={refetch} style={{cursor:'pointer'}}>
+            <span>Could not reach backend — {errorMsg}. Click to retry.</span>
+            <span className="upload-status">ERROR</span>
+          </div>
+        )}
+        {status === 'ready' && (
+          <div className="upload-row" onClick={refetch} style={{cursor:'pointer'}}>
+            <span>{trail.length} events loaded from live backend</span>
+            <span className="upload-status ok">LIVE</span>
+          </div>
+        )}
       </div>
 
-      {data && (
+      {status === 'ready' && (
         <div className="section">
           <div className="filter-row">
             <button className={`filter-btn ${filter==='all'?'active':''}`} onClick={()=>setFilter('all')}>All ({trail.length})</button>
